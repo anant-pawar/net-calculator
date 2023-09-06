@@ -16,15 +16,14 @@ public class DefaultNetCalculator implements NetCalculator {
      */
     @Override
     public Double calculateNetPrice(Double grossPrice, String countryISO) {
-        // Ensure that taxRateProvider is not null
         if (taxRateProvider == null) {
             throw new IllegalStateException("Tax rate provider is not initialized.");
         }
 
-        Double taxRate = taxRateProvider.getTaxRate(countryISO);
+        final Double taxRate = taxRateProvider.getTaxRate(countryISO);
 
         if (taxRate == null || taxRate <= 0.0) {
-            throw new InvalidTaxRateException(String.format("Invalid tax rate: %s for country ISO code: %s ", Double.toString(taxRate), countryISO));
+            throw new InvalidTaxRateException(String.format("Invalid tax rate: %s for country ISO code: %s ", taxRate, countryISO));
         }
 
         return grossPrice / (1 + taxRate);
