@@ -24,7 +24,7 @@ public class DefaultNetCalculator implements NetCalculator {
         Double taxRate = taxRateProvider.getTaxRate(countryISO);
 
         if (taxRate == null || taxRate <= 0.0) {
-            throw new InvalidTaxRateException(String.format("Invalid tax rate: %d for country ISO code: %s ", taxRate, countryISO));
+            throw new InvalidTaxRateException(String.format("Invalid tax rate: %s for country ISO code: %s ", Double.toString(taxRate), countryISO));
         }
 
         return grossPrice / (1 + taxRate);

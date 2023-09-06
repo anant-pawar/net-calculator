@@ -1,5 +1,6 @@
 import org.gsg.FileBasedTaxRateProvider;
 import org.gsg.TaxRateProvider;
+import org.gsg.exception.InvalidTaxRateException;
 import org.gsg.exception.TaxRateNotPresentException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,16 @@ public class TaxRateProviderTest {
 
     @Test
     void testGetTaxRate_TaxRateNotPresentException() {
-        Assertions.assertThrows(TaxRateNotPresentException.class, () -> provider.getTaxRate("INVALID"));
+        Exception exception = Assertions.assertThrows(
+                TaxRateNotPresentException.class, () -> provider.getTaxRate("INVALID"));
+        Assertions.assertEquals("Tax rate missing for country code: INVALID", exception.getMessage());
+    }
+
+    @Test
+    void testGetTaxRate_InvalidTaxRateException() {
+        TaxRateProvider taxRateProvider = new FileBasedTaxRateProvider("tax-rates-invalid.properties");
+        Exception exception = Assertions.assertThrows(
+                InvalidTaxRateException.class, () -> taxRateProvider.getTaxRate("FR"));
+        Assertions.assertEquals("Invalid tax rate for country ISO code: FR", exception.getMessage());
     }
 }
