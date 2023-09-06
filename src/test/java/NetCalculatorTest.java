@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-class NetCalculatorTest {
+public class NetCalculatorTest {
 
     private final NetCalculator calculator = new DefaultNetCalculator(
             new FileBasedTaxRateProvider()
