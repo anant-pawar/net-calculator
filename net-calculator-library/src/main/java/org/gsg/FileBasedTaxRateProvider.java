@@ -8,7 +8,7 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.ex.ConversionException;
 import org.gsg.exception.InvalidTaxRateException;
 import org.gsg.exception.TaxRateLoadingException;
-import org.gsg.exception.TaxRateNotPresentException;
+import org.gsg.exception.TaxRateNotFoundException;
 
 import java.util.NoSuchElementException;
 
@@ -31,11 +31,12 @@ public class FileBasedTaxRateProvider implements TaxRateProvider {
 
     private PropertiesConfiguration loadTaxRates(final String taxRatesFile) {
         final Parameters parameters = new Parameters();
-        final FileBasedConfigurationBuilder<PropertiesConfiguration> builder =
-                new FileBasedConfigurationBuilder<>(PropertiesConfiguration.class)
-                        .configure(parameters.properties()
-                                .setFileName(taxRatesFile));
         try {
+            final FileBasedConfigurationBuilder<PropertiesConfiguration> builder =
+                    new FileBasedConfigurationBuilder<>(PropertiesConfiguration.class)
+                            .configure(parameters.properties()
+                                    .setFileName(taxRatesFile));
+
             return builder.getConfiguration();
         } catch (ConfigurationException exception) {
             log.error("Failed to load the tax rates from {}.", TAX_RATES_FILE, exception);
@@ -51,9 +52,9 @@ public class FileBasedTaxRateProvider implements TaxRateProvider {
         try {
             return taxRatesConfiguration.getDouble(countryISO);
         } catch (NoSuchElementException exception) {
-            throw new TaxRateNotPresentException("Tax rate missing for country code: " + countryISO, exception);
+            throw new TaxRateNotFoundException("Tax rate missing for country code: " + countryISO, exception);
         } catch (ConversionException exception) {
-            throw new InvalidTaxRateException("Invalid tax rate for country ISO code: " + countryISO);
+            throw new InvalidTaxRateException("Invalid tax rate for country ISO code: " + countryISO, exception);
         }
     }
 }

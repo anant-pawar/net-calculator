@@ -2,7 +2,7 @@ package org.gsg;
 
 import lombok.RequiredArgsConstructor;
 import org.gsg.exception.InvalidTaxRateException;
-import org.gsg.exception.TaxRateNotPresentException;
+import org.gsg.exception.TaxRateNotFoundException;
 
 @RequiredArgsConstructor
 public class DefaultNetCalculator implements NetCalculator {
@@ -12,7 +12,7 @@ public class DefaultNetCalculator implements NetCalculator {
     /**
      * {@inheritDoc}
      *
-     * @throws TaxRateNotPresentException if the tax rate for the specified country is not available.
+     * @throws TaxRateNotFoundException if the tax rate for the specified country is not available.
      */
     @Override
     public Double calculateNetPrice(Double grossPrice, String countryISO) {
