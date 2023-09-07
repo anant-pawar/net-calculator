@@ -20,8 +20,8 @@ Simple library to calculate the net price for provided gross price and country c
 
       System.out.println("Net price for gross 100.0 and country Germany is : " + netPrice);
   ```
-* Build and Install :  `mvn clean install`
-* Run :  `mvn exec:java -pl net-calculator-example -Dexec.mainClass=org.gsg.Main`
+* Build and Install :  `./mvnw clean install`
+* Run :  `./mvnw exec:java -pl net-calculator-example -D exec.mainClass=org.gsg.Main`
 
 # GitHub Actions
 
