@@ -1,3 +1,4 @@
+import com.neovisionaries.i18n.CountryCode;
 import org.gsg.FileBasedTaxRateProvider;
 import org.gsg.TaxRateProvider;
 import org.gsg.exception.InvalidTaxRateException;
@@ -33,7 +34,7 @@ class TaxRateProviderTest {
     void testGetTaxRate_InvalidTaxRateException() {
         TaxRateProvider taxRateProvider = new FileBasedTaxRateProvider("tax-rates-invalid.properties");
         Exception exception = Assertions.assertThrows(
-                InvalidTaxRateException.class, () -> taxRateProvider.getTaxRate("FR"));
+                InvalidTaxRateException.class, () -> taxRateProvider.getTaxRate(CountryCode.FR.getAlpha2()));
         Assertions.assertEquals("Invalid tax rate for country ISO code: FR", exception.getMessage());
     }
 }

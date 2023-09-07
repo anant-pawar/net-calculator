@@ -1,3 +1,4 @@
+import com.neovisionaries.i18n.CountryCode;
 import org.gsg.DefaultNetCalculator;
 import org.gsg.FileBasedTaxRateProvider;
 import org.gsg.NetCalculator;
@@ -28,7 +29,7 @@ class NetCalculatorTest {
     void testCalculateNetPrice_IllegalStateException() {
         NetCalculator netCalculator = new DefaultNetCalculator(null);
         Exception exception = Assertions.assertThrows(
-                IllegalStateException.class, () -> netCalculator.calculateNetPrice(10.0, "DE"));
+                IllegalStateException.class, () -> netCalculator.calculateNetPrice(10.0, CountryCode.DE.getAlpha2()));
         Assertions.assertEquals("Tax rate provider is not initialized.", exception.getMessage());
     }
 
@@ -37,7 +38,7 @@ class NetCalculatorTest {
         NetCalculator netCalculator = new DefaultNetCalculator(
                 new FileBasedTaxRateProvider("tax-rates-invalid.properties"));
         Exception exception = Assertions.assertThrows(
-                InvalidTaxRateException.class, () -> netCalculator.calculateNetPrice(10.0, "DE"));
+                InvalidTaxRateException.class, () -> netCalculator.calculateNetPrice(10.0, CountryCode.DE.getAlpha2()));
         Assertions.assertEquals("Invalid tax rate: 0.0 for country ISO code: DE ", exception.getMessage());
     }
 
